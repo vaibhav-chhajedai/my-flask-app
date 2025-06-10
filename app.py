@@ -1,8 +1,10 @@
 from flask import Flask, request, send_file, jsonify
 from PIL import Image
 import io
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/convert', methods=['POST'])
 def convert_image():

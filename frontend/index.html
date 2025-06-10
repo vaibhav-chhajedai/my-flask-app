@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Converter</title>
+</head>
+<body>
+  <h1>Convert Image Format</h1>
+  
+  <form id="upload-form">
+    <input type="file" name="image" id="image-input" required><br><br>
+    <select name="format" id="format-select" required>
+      <option value="jpeg">JPEG</option>
+      <option value="png">PNG</option>
+      <option value="webp">WEBP</option>
+      <option value="gif">GIF</option>
+      <option value="bmp">BMP</option>
+    </select><br><br>
+    <button type="submit">Convert</button>
+  </form>
+
+  <h2>Converted Image:</h2>
+  <a id="download-link" style="display:none" download>Download Converted Image</a>
+  <img id="output-image" style="max-width: 400px; display:none;" />
+
+  <script>
+    document.getElementById('upload-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData();
+      const imageInput = document.getElementById('image-input');
+      const format = document.getElementById('format-select').value;
+
+      formData.append('image', imageInput.files[0]);
+      formData.append('format', format);
+
+      try {
+        const response = await fetch('http://127.0.0.1:8080/convert', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) throw new Error('Conversion failed');
+
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+
+        // Show the image and a download link
+        const img = document.getElementById('output-image');
+        img.src = url;
+        img.style.display = 'block';
+
+        const link = document.getElementById('download-link');
+        link.href = url;
+        link.download = 'converted.' + format;
+        link.style.display = 'inline-block';
+        link.textContent = 'Download Converted Image';
+
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    });
+  </script>
+</body>
+</html>
+
