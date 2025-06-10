@@ -1,3 +1,16 @@
 flask
 pillow
 flask-cors
+PyPDF2
+reportlab
+PyMuPDF
+python-docx
+docx2pdf
+pandas
+openpyxl
+python-pptx
+opencv-python
+fpdf2 
+pdfkit 
+cryptography 
+qrcode

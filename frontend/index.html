@@ -35,7 +35,7 @@
       formData.append('format', format);
 
       try {
-        const response = await fetch('http://127.0.0.1:8080/convert', {
+        const response = await fetch('https://my-flask-app-production-a358.up.railway.app/convert', {
           method: 'POST',
           body: formData
         });
